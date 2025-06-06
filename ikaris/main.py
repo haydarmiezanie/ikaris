@@ -7,7 +7,7 @@ from checker.model_card_verification import model_card_verification
 
 # Initialize color output
 colorama_init()
-logging = get_logger("Ultron")
+logging = get_logger("Ikaris")
 
 
 def main(model_id):
@@ -58,10 +58,10 @@ def main(model_id):
 
 if __name__ == '__main__':
     description = """
-    Ultron - Open-Source Model Safety Checker
+    Ikaris - Open-Source Model Safety Checker
 
     A security validation tool that examines whether an open-source AI model can be safely
-    executed in your environment. Ultron performs comprehensive safety checks including:
+    executed in your environment. Ikaris performs comprehensive safety checks including:
 
     - Malware/payload detection in model files
     - Suspicious code patterns
@@ -75,19 +75,19 @@ if __name__ == '__main__':
     """
     epilog = """
     Examples:
-        Basic safety scan:          ultron --model_id author/model
+        Basic safety scan:          ikaris --model_id author/model
 
     Notes:
     - Supported formats: Hugging Face only (for now)
     - Run with admin privileges for full system impact analysis
 
     Security Disclaimer:
-    Always verify checksums from official sources. Ultron provides heuristic analysis
+    Always verify checksums from official sources. Ikaris provides heuristic analysis
     but cannot guarantee complete safety. Report issues at: haydarsaja@gmail.com
     """
 
     parser = argparse.ArgumentParser(
-        prog='ultron',
+        prog='ikaris',
         description=description,
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,

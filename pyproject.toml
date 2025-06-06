@@ -1,7 +1,7 @@
 [project]
-name = "ultron-checker"
+name = "ikaris"
 version = "0.1.0"
-description = "Ultron - Open-source Hugging Face model safety checker"
+description = "Ikaris - Open-source Hugging Face model safety checker"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "Apache 2.0"}
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-ultron = "ultron.main:main"
+ikaris = "ikaris.main:main"
 
 [build-system]
 requires = ["setuptools>=61"]

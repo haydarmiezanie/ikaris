@@ -1,1 +1,0 @@
-"""Ultron model safety checker"""
