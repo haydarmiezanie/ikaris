@@ -1,4 +1,4 @@
-from helpers.logging import get_logger
+from ikaris.helpers.logging import get_logger
 from huggingface_hub import list_repo_files
 from colorama import Fore, Style
 
@@ -34,7 +34,7 @@ def check_hugging_face(model_id):
             )
         else:
             list_info['Info'].append(
-                "No suspicious Python files found in the model repository."
+                f"{file} is Safe"
             )
 
     return list_info

@@ -1,4 +1,4 @@
-from helpers.logging import get_logger
+from ikaris.helpers.logging import get_logger
 from huggingface_hub import ModelCard, HfApi
 from colorama import Fore, Style
 
