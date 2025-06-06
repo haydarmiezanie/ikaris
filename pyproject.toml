@@ -1,0 +1,20 @@
+[project]
+name = "ultron-checker"
+version = "0.1.0"
+description = "Ultron - Open-source Hugging Face model safety checker"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "Apache 2.0"}
+authors = [{ name = "Haydar Miezanie Abdul Jamil", email = "haydarsaja@gmail.com" }]
+keywords = ["huggingface", "security", "model scanner", "AI safety"]
+dependencies = [
+    "huggingface_hub>=0.32.4",
+    "colorama>=0.4.6"
+]
+
+[project.scripts]
+ultron = "ultron.main:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
