@@ -82,7 +82,7 @@ def main():
     )
 
     # Final summary
-    print(f"\nSummary: {Fore.GREEN}{info_count} Info{Style.RESET_ALL}, "
+    print(f"\nSummary: {Fore.GREEN}{info_count} Check {Style.RESET_ALL}, "
           f"{Fore.YELLOW}{warning_count} Warning{Style.RESET_ALL}, "
           f"{Fore.RED}{critical_count} Critical{Style.RESET_ALL}")
 
