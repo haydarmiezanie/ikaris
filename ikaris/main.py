@@ -11,42 +11,24 @@ logging = get_logger("Ikaris")
 
 
 def main():
-    """
-    Runs the 3-layer verification process for a given Hugging Face model.
-
-    Parameters:
-        model_id (str): The Hugging Face model ID to be validated.
-
-    Returns:
-        None
-    """
     description = """
-    Ikaris - Open-Source Model Safety Checker
+    Ikaris: Hugging Face Model Risk & Safety Checker
 
-    A security validation tool that examines whether an open-source AI model can be safely
-    executed in your environment. Ikaris performs comprehensive safety checks including:
-
-    - Malware/payload detection in model files
-    - Suspicious code patterns
-    - Known vulnerability scanning
-    - Resource usage analysis
-    - Permission/access requirements
-    - Compatibility with your system configuration
-
-    The tool generates a detailed safety report with risk assessment and recommendations
-    before you deploy the model in production environments.
+    Ikaris is a CLI tool designed to verify and analyze the trustworthiness, origin, and integrity of machine learning models hosted on the Hugging Face platform. 
+    It performs multi-layered security and metadata checks to help researchers and developers ensure that models they intend to use do not introduce unexpected risks.
     """
     epilog = """
-    Examples:
-        Basic safety scan:          ikaris --model_id author/model
+    Command Layers:
+    1. Source Verification: Identifies creator, publisher, and basic metadata.
+    2. File Verification: Reviews files and folders inside the model repo for suspicious or non-standard content.
+    3. Model Card Review: Validates completeness and clarity of the model card documentation.
 
-    Notes:
-    - Supported formats: Hugging Face only (for now)
-    - Run with admin privileges for full system impact analysis
+    Example Usage:
+    ikaris check hf-model tensorblock/Llama-3-ELYZA-JP-8B-GGUF
+    ikaris check hf-model tencent/HunyuanVideo-Avatar
 
-    Security Disclaimer:
-    Always verify checksums from official sources. Ikaris provides heuristic analysis
-    but cannot guarantee complete safety. Report issues at: haydarsaja@gmail.com
+    Disclaimer:
+    Ikaris does not replace a full security audit. Always combine automated checks with manual review when deploying models in production environments.
     """
     parser = argparse.ArgumentParser(
         prog='ikaris',
@@ -54,13 +36,22 @@ def main():
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    subparsers = parser.add_subparsers(dest="command")
 
-    parser.add_argument('--model_id',
-                        help='Model ID on Hugging Face (e.g., bert-base-uncased)',
-                        required=True)
+    # Subcommand: check hf-package
+    check_parser = subparsers.add_parser("check", help="Check various resources")
+    check_subparsers = check_parser.add_subparsers(dest="subcommand")
+
+    hf_parser = check_subparsers.add_parser("hf-model", help="Check Hugging Face model availability")
+    hf_parser.add_argument("model_id", help="ID of the Hugging Face model")
 
     args = parser.parse_args()
-    model_id= args.model_id
+
+    if args.command == 'check' and args.subcommand == "hf-model":
+        model_id = args.model_id
+    else:
+        parser.print_help()
+        return
     info_count = 0
     warning_count = 0
     critical_count = 0
