@@ -4,7 +4,7 @@
 [![Total Download](https://img.shields.io/pypi/dm/ikaris)]
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-**Ikaris** is an open-source CLI tool for verifying the security of machine learning models from [Hugging Face](https://huggingface.co) and PyPI(https://pypi.org/). Ikaris performs multi-layer checks to help users assess risks before deploying models and package in production environments.
+**Ikaris** is an open-source CLI tool for verifying the security of machine learning models from [Hugging Face](https://huggingface.co) and [PyPI](https://pypi.org/). Ikaris performs multi-layer checks to help users assess risks before deploying models and package in production environments.
 
 ## ✨ Main Feature
 
