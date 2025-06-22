@@ -36,27 +36,28 @@ def fetch_package_source_info(package_name):
               GitHub repo info (if available), etc.
     """
     try:
+        DEPS_DEV_API = "https://api.deps.dev/v3/systems/pypi/packages"
         if '==' in package_name:
             package_name, version = package_name.split('==', 1)
-            pypi_url = f"https://pypi.org/pypi/{package_name}/{version}/json"
         else:
-            version = None
-            pypi_url = f"https://pypi.org/pypi/{package_name}/json"
+            version_url = f"{DEPS_DEV_API}/{package_name}"
+            version_response = requests.get(version_url)
+            version_data = version_response.json()
 
+            for v in version_data.get('versions', []):
+                if v.get('isDefault'):
+                    version = v['versionKey']['version']
+                    break
+            else:
+                return {'Critical': [f"Could not determine default version for package '{package_name}'."], 'Warning': [], 'Info': []}
+
+        pypi_url = f"https://pypi.org/pypi/{package_name}/{version}/json"
         response = requests.get(pypi_url)
-        response.raise_for_status()
 
         data = lower_case_keys(response.json())
         info = data.get('info', {})
-        releases = data.get('releases', {})
 
-        version = version or info.get('version', 'Unknown')
-        release_time = "Unknown"
-        try:
-            release_time_raw = list(releases[version])[-1]['upload_time_iso_8601']
-            release_time = datetime.fromisoformat(release_time_raw).strftime('%Y-%m-%d %H:%M:%S')
-        except (KeyError, IndexError, ValueError):
-            pass
+        version = info.get('version', 'Unknown')
 
         license_type = info.get('license') or "Unknown"
         is_open_source = "Yes" if license_type.lower() != "proprietary" else "No"
@@ -73,12 +74,11 @@ def fetch_package_source_info(package_name):
         result = {
             "Source": f"https://pypi.org/project/{package_name}/",
             "Version": version,
-            "Last Release Date": release_time,
             "License": license_type[:10],
             "Open Source": is_open_source,
             "Project URL": project_url
         }
-
+        
         # GitHub enrichment
         if "github.com" in project_url.lower():
             try:
@@ -115,7 +115,6 @@ def fetch_package_source_info(package_name):
     return {
         "Source": f"https://pypi.org/project/{package_name}/",
         "Version": "Unknown",
-        "Last Release Date": "Unknown",
         "License": "Unknown",
         "Open Source": "Unknown",
         "Project URL": "Unknown",

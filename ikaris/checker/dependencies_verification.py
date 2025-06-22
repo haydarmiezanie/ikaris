@@ -31,7 +31,7 @@ def check_dependencies(package_name, version_package):
                 return {'Critical': [f"Could not determine default version for package '{package_name}'."], 'Warning': [], 'Info': []}
 
         deps_url = f"{DEPS_DEV_API}/{package_name}/versions/{version_package}:dependencies"
-        print(deps_url)
+        
         deps_response = requests.get(deps_url)
         deps_data = deps_response.json()
         

@@ -111,9 +111,14 @@ def main():
         sys.exit(1)
 
     # Summary Output
-    print(f"\nSummary: {Fore.GREEN}{info_count} Info{Style.RESET_ALL}, "
+    print(f"\nSummary: {Fore.GREEN}{info_count+warning_count+critical_count} Info{Style.RESET_ALL}, "
           f"{Fore.YELLOW}{warning_count} Warning{Style.RESET_ALL}, "
           f"{Fore.RED}{critical_count} Critical{Style.RESET_ALL}")
+    
+    if warning_count > 10/100*(info_count+warning_count+critical_count):
+        print(f"{Fore.RED}Package warning count is more than 10% of tolerance level. This may indicate potential risks or security issues.{Style.RESET_ALL}")
+    else:
+        print(f"{Fore.GREEN}Package warning count is within tolerance level.")
 
 
 if __name__ == '__main__':
