@@ -9,7 +9,8 @@ authors = [{ name = "Haydar Miezanie Abdul Jamil", email = "haydarsaja@gmail.com
 keywords = ["huggingface", "security", "model scanner", "AI safety"]
 dependencies = [
     "huggingface_hub>=0.32.4",
-    "colorama>=0.4.6"
+    "colorama>=0.4.6",
+    "requests>=2.32.3"
 ]
 
 [project.scripts]
@@ -18,3 +19,8 @@ ikaris = "ikaris.main:main"
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/haydarmiezanie/ikaris"
+Repository = "https://github.com/haydarmiezanie/ikaris"
+Bug Tracker = "https://github.com/haydarmiezanie/ikaris/issues"

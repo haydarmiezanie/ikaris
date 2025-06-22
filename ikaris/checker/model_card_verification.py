@@ -2,21 +2,22 @@ from ikaris.helpers.logging import get_logger
 from huggingface_hub import ModelCard, HfApi
 from colorama import Fore, Style
 
-logging = get_logger("FirstLayer")
+logging = get_logger("ThirdLayer")
 
 def check_model_card_and_metadata(model_id):
     """
     Checks the Hugging Face model card and metadata for documentation completeness.
     
-    Parameters:
+    Args:
         model_id (str): The model ID on Hugging Face.
 
     Returns:
-        dict: Categorized messages under 'Info' and 'Warning'.
+        dict: Categorized messages under 'Info', 'Warning', and 'Critical'.
     """
     messages = {
         'Info': [],
-        'Warning': []
+        'Warning': [],
+        'Critical': []
     }
 
     # Check for model card content
@@ -45,18 +46,18 @@ def check_model_card_and_metadata(model_id):
 
     return messages
 
-
-def model_card_verification(model_id, info_count=0, warning_count=0):
+def model_card_verification(model_id, info_count=0, warning_count=0, critical_count=0):
     """
-    Performs verification of the Hugging Face model card and logs the results.
+    Verifies the Hugging Face model card and metadata, and logs the results.
     
-    Parameters:
+    Args:
         model_id (str): The model identifier.
         info_count (int): Current count of info-level messages.
         warning_count (int): Current count of warning-level messages.
+        critical_count (int): Current count of critical-level messages.
 
     Returns:
-        tuple: (messages_dict, info_count, warning_count)
+        tuple: (messages_dict, updated_info_count, updated_warning_count, updated_critical_count)
     """
     print(Fore.CYAN + "-" * 40 + Style.RESET_ALL)
     print("Model Card Review")
@@ -69,8 +70,11 @@ def model_card_verification(model_id, info_count=0, warning_count=0):
             if level == "Warning":
                 warning_count += 1
                 logging.warning(msg)
+            elif level == "Critical":
+                critical_count += 1
+                logging.critical(msg)
             else:
                 info_count += 1
                 logging.info(msg)
 
-    return messages, info_count, warning_count
+    return messages, info_count, warning_count, critical_count
